@@ -6,6 +6,10 @@ function App() {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  
+   const API_BASE_URL =
+    import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
+
 
   const sampleTickets = [
     "My payment failed but money was deducted from my account. I need urgent help.",
@@ -31,6 +35,7 @@ function App() {
     setLoading(true);
 
     try {
+      console.log("API URL:", `${API_BASE_URL}/analyze-ticket`);
      const apiCall = fetch(`${API_BASE_URL}/analyze-ticket`, {
         method: "POST",
         headers: {
