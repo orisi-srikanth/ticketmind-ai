@@ -20,7 +20,7 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -38,11 +38,11 @@ def health_check():
     return {
         "status": "ok"
     }
-@app.post("/leaves")
+@app.post("/leave")
 def apply_leave():
     return {"message": "Leave applied successfully"}
 
-@app.get("/leaves")
+@app.get("/leave")
 def get_leaves():
     return {"message": "Leave list"}
 

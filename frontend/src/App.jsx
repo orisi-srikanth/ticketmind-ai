@@ -31,7 +31,7 @@ function App() {
     setLoading(true);
 
     try {
-      const apiCall = fetch("http://127.0.0.1:8000/analyze-ticket", {
+     const apiCall = fetch(`${API_BASE_URL}/analyze-ticket`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
