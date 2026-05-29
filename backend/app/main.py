@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.schemas import TicketRequest, TicketResponse
@@ -38,13 +38,39 @@ def health_check():
     return {
         "status": "ok"
     }
+@app.post("/leaves")
+def apply_leave():
+    return {"message": "Leave applied successfully"}
+
+@app.get("/leaves")
+def get_leaves():
+    return {"message": "Leave list"}
 
 
 @app.post("/analyze-ticket", response_model=TicketResponse)
 def analyze_ticket(request: TicketRequest):
     cleaned_text = clean_text(request.ticket_text)
 
+    if not cleaned_text:
+        raise HTTPException(
+            status_code=400,
+            detail="Please enter a support ticket."
+        )
+
+    if len(cleaned_text) < 3:
+        raise HTTPException(
+            status_code=400,
+            detail="Please enter a meaningful support issue."
+        )
+
     category, keywords_found = classify_category(cleaned_text)
+
+    if len(keywords_found) == 0:
+        raise HTTPException(
+            status_code=400,
+            detail="Please enter a valid support issue such as payment, login, refund, delivery, technical problem, account issue, product issue, or leave request."
+        )
+
     priority = detect_priority(cleaned_text)
     urgency = detect_urgency(priority)
     sentiment = detect_sentiment(cleaned_text)

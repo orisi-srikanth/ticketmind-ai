@@ -31,7 +31,11 @@ CATEGORY_KEYWORDS = {
     ],
     "General Query": [
         "help", "information", "query", "question", "support"
-    ]
+    ],
+    "Leave Request": [
+    "leave", "sick leave", "casual leave", "vacation",
+    "holiday", "absence", "absent", "permission", "time off","leaves"
+],
 }
 
 
